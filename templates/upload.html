@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block body_block %}
+
+<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form | crispy }}
+    {% if messages %}
+    <div class="alert alert-warning">
+        <div class="container text-center">
+            {% for message in messages %}
+            <li>
+                {% if message.tags %}
+                class="{{ message.tags }}"
+                {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <br>
+    <input type="submit" value="Upload files" class="btn btn-primary">
+</form>
+{% endblock %}

@@ -12,10 +12,10 @@
             {% if user.is_authenticated %}
                 <li class="nav-item"><a class="navbar-brand" >logged as: {{ user.username }}</a></li>
             {% else %}
-                <li class="nav-item"><a class="navbar-brand" >Not Authenticated</a></li>
+                <li class="nav-item"><a class="navbar-brand" >Not Authorized</a></li>
             {% endif %}
             <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Upload</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'upload' %}">Upload</a></li>
         </ul>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             {% if user.is_authenticated %}

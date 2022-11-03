@@ -3,12 +3,13 @@ import csv
 import os
 from bs4 import BeautifulSoup
 from pathlib import Path
-from django.contrib.auth import get_user_model
+import datetime
+from django.conf import settings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = os.path.join(BASE_DIR, 'files', 'test_task.csv')
 XML_PATH = os.path.join(BASE_DIR, 'files', 'test_task.xml')
-
+MEDIA_PATH = os.path.join(BASE_DIR, "files")
 
 def get_csv_data(csv_file):
     csv_data = []
@@ -63,6 +64,22 @@ def collect_from_stored_files():
     return collect_valid_data(csv_data, xml_data)
 
 
-data = collect_from_stored_files()
-for i in data:
-    print(i)
+def collect_from_uploaded_files(csv_file, xml_file):
+    csv_data = clear_data(get_csv_data(os.path.join(MEDIA_PATH,os.path.basename(csv_file))))
+    xml_data = clear_data(get_xml_data(os.path.join(MEDIA_PATH,os.path.basename(xml_file))))
+    return collect_valid_data(csv_data, xml_data)
+
+
+def add_users(user_model, data):
+    for user_data in data:
+        if not user_model.objects.filter(username=user_data['username']):
+            user_model.objects.create(
+                username=user_data['username'],
+                first_name=user_data['first_name'],
+                last_name=user_data['last_name'],
+                date_joined=datetime.datetime.fromtimestamp(int(user_data['date_joined'])),
+                photo_url=user_data['photo_url']
+            )
+        valid_user = user_model.objects.get(username=user_data["username"])
+        valid_user.set_password(user_data["password"])
+        valid_user.save()

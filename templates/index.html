@@ -4,7 +4,30 @@
 <title>home</title>
 <div class="bg-light p-5 rounded-lg m-3">
     {% if user.is_authenticated %}
-                <h1>Django Level Five</h1>
+                 {% if users %}
+
+            <table class="table">
+                <tr>
+                    <th>Photo</th>
+                    <th>Username</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Date joined</th>
+                </tr>
+                {% endif %}
+
+                {% for user in users %}
+                <tr>
+                    <td><img src="{{ user.photo_url }}" alt="No image found" style="height: 80px;width: 80px">
+                        </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.date_joined }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
     {% else %}
                 <h1>Please, log in for visit this page</h1>
     {% endif %}

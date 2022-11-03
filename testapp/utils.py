@@ -1,3 +1,4 @@
+""" File for all auxiliary functions"""
 import re
 import csv
 import os
@@ -13,6 +14,7 @@ MEDIA_PATH = os.path.join(BASE_DIR, "files")
 
 
 def get_csv_data(csv_file):
+    """function for reading CSV and write it in list of dicts"""
     csv_data = []
     with open(csv_file, 'r') as f:
         csv_reader = csv.reader(f)
@@ -24,6 +26,7 @@ def get_csv_data(csv_file):
 
 
 def get_xml_data(xml_file):
+    """function that parse xml file and write data to list with dicts"""
     xml_data = []
     with open(xml_file, 'r') as f:
         file = f.read()
@@ -39,6 +42,7 @@ def get_xml_data(xml_file):
 
 
 def clear_data(data):
+    """function that ignore text in round and square brackets """
     for i in range(2):
         for item in data:
             for key in item.keys():
@@ -49,6 +53,7 @@ def clear_data(data):
 
 
 def collect_valid_data(csv_data, xml_data):
+    """ function for ignoring users without some kind of information"""
     validated_data = []
     for csv_item in csv_data:
         for xml_item in xml_data:
@@ -60,18 +65,21 @@ def collect_valid_data(csv_data, xml_data):
 
 
 def collect_from_stored_files():
+    """ Complicated function that takes data from test files, clean it and return in list of dicts"""
     csv_data = clear_data(get_csv_data(CSV_PATH))
     xml_data = clear_data(get_xml_data(XML_PATH))
     return collect_valid_data(csv_data, xml_data)
 
 
 def collect_from_uploaded_files(csv_file, xml_file):
+    """Complicated function that takes data from uploaded files, clean it and return in list of dicts"""
     csv_data = clear_data(get_csv_data(os.path.join(MEDIA_PATH, os.path.basename(csv_file))))
     xml_data = clear_data(get_xml_data(os.path.join(MEDIA_PATH, os.path.basename(xml_file))))
     return collect_valid_data(csv_data, xml_data)
 
 
 def add_users(user_model, data):
+    """ function that create a new users and add it into database"""
     for user_data in data:
         if not user_model.objects.filter(username=user_data['username']):
             user_model.objects.create(

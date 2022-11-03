@@ -15,6 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def index(request):
+    """view for home page"""
     user = get_user_model()
     if user.objects.all():
         return render(request, 'index.html', {'users': user.objects.all()})
@@ -24,12 +25,11 @@ def index(request):
 
 
 def user_login(request):
+    """view for login page"""
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(username=username, password=password)
-
         if user:
             if user.is_active:
                 login(request, user)
@@ -46,11 +46,13 @@ def user_login(request):
 
 @login_required
 def user_logout(request):
+    """view for logout"""
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
 
 def upload_files(request):
+    """view for uploading files"""
     if request.POST:
         form = UploadForm(request.POST, request.FILES)
         csv_file = request.FILES['upload_csv']
@@ -76,5 +78,4 @@ def upload_files(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = UploadForm()
-
     return render(request, 'upload.html', {'form': form})

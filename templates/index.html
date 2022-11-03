@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+<title>home</title>
+<div class="bg-light p-5 rounded-lg m-3">
+    {% if user.is_authenticated %}
+                <h1>Django Level Five</h1>
+    {% else %}
+                <h1>Please, log in for visit this page</h1>
+    {% endif %}
+
+</div>
+
+{% endblock %}

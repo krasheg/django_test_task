@@ -11,6 +11,7 @@ CSV_PATH = os.path.join(BASE_DIR, 'files', 'test_task.csv')
 XML_PATH = os.path.join(BASE_DIR, 'files', 'test_task.xml')
 MEDIA_PATH = os.path.join(BASE_DIR, "files")
 
+
 def get_csv_data(csv_file):
     csv_data = []
     with open(csv_file, 'r') as f:
@@ -38,12 +39,12 @@ def get_xml_data(xml_file):
 
 
 def clear_data(data):
-    for item in data:
-        for key in item.keys():
-            item[key] = re.sub('\(.*\)', "", item[key])
-            item[key] = re.sub('\[.*\]', "", item[key])
-            if item[key] == '':  # if after removing item becomes empty
-                data.remove(item)
+    for i in range(2):
+        for item in data:
+            for key in item.keys():
+                item[key] = re.sub("\(.*?\)|\[.*?\]", "", item[key])
+                if item[key] == '':  # if after removing item becomes empty
+                    data.remove(item)
     return data
 
 
@@ -65,8 +66,8 @@ def collect_from_stored_files():
 
 
 def collect_from_uploaded_files(csv_file, xml_file):
-    csv_data = clear_data(get_csv_data(os.path.join(MEDIA_PATH,os.path.basename(csv_file))))
-    xml_data = clear_data(get_xml_data(os.path.join(MEDIA_PATH,os.path.basename(xml_file))))
+    csv_data = clear_data(get_csv_data(os.path.join(MEDIA_PATH, os.path.basename(csv_file))))
+    xml_data = clear_data(get_xml_data(os.path.join(MEDIA_PATH, os.path.basename(xml_file))))
     return collect_valid_data(csv_data, xml_data)
 
 

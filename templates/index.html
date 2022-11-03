@@ -6,24 +6,24 @@
     {% if user.is_authenticated %}
                  {% if users %}
 
-            <table class="table">
-                <tr>
-                    <th>Photo</th>
-                    <th>Username</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Date joined</th>
+            <table class="table table-dark table-striped">
+                <tr class="table-dark">
+                    <th class="table-dark">Photo</th>
+                    <th class="table-dark">Username</th>
+                    <th class="table-dark">First name</th>
+                    <th class="table-dark">Last name</th>
+                    <th class="table-dark">Date joined</th>
                 </tr>
                 {% endif %}
 
                 {% for user in users %}
-                <tr>
-                    <td><img src="{{ user.photo_url }}" alt="No image found" style="height: 80px;width: 80px">
+                <tr class="table-dark">
+                    <td class="table-dark"><img src="{{ user.photo_url }}" alt="No image found" style="height: 80px;width: 80px">
                         </td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.first_name }}</td>
-                    <td>{{ user.last_name }}</td>
-                    <td>{{ user.date_joined }}</td>
+                    <td class="table-dark">{{ user.username }}</td>
+                    <td class="table-dark">{{ user.first_name }}</td>
+                    <td class="table-dark">{{ user.last_name }}</td>
+                    <td class="table-dark">{{ user.date_joined }}</td>
                 </tr>
                 {% endfor %}
 

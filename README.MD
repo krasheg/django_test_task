@@ -1,5 +1,5 @@
 ## How to start
-###project uses python v.3.9 or newer
+### project uses python v.3.9 or newer
 
 ***
 
